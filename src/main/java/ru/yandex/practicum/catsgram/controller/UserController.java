@@ -43,7 +43,6 @@ public class UserController {
         String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
-        validateUsername(username);
         validatePassword(password);
         if (email != null && !email.isBlank()) {
             if (!oldUser.getEmail().equals(email)) {
