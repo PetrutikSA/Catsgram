@@ -6,15 +6,12 @@ import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
 public class UserService {
-    Map<Long, User> users = new HashMap<>();
+    private final Map<Long, User> users = new HashMap<>();
 
     public Collection<User> getAllUsers() {
         return users.values();
@@ -92,5 +89,9 @@ public class UserService {
                 .filter(email::equals)
                 .findAny();
         return emailInDB.isPresent();
+    }
+
+    public Optional<User> getUserWithId (Long id) {
+        return !users.containsKey(id) ? Optional.empty() : Optional.of(users.get(id));
     }
 }
