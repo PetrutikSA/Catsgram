@@ -67,4 +67,10 @@ public class PostService {
         }
         throw new NotFoundException("Пост с id = " + newPost.getId() + " не найден");
     }
+
+    public Optional<Post> findById(int postId) {
+        return posts.values().stream()
+                .filter(x -> x.getId() == postId)
+                .findFirst();
+    }
 }

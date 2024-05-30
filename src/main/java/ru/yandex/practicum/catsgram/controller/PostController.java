@@ -6,6 +6,7 @@ import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,5 +27,10 @@ public class PostController {
     @PutMapping
     public Post update(@RequestBody Post newPost) {
         return postService.update(newPost);
+    }
+
+    @GetMapping("/{postId}")
+    public Optional<Post> findById(@PathVariable int postId) {
+        return postService.findById(postId);
     }
 }
