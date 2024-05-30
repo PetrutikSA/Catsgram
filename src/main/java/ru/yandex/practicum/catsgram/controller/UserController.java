@@ -6,6 +6,8 @@ import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.Collection;
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -25,5 +27,10 @@ public class UserController {
     @PutMapping
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<User> findById (@PathVariable Long id) {
+        return userService.getUserWithId(id);
     }
 }
