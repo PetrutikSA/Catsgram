@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,5 +34,10 @@ public class PostController {
     @GetMapping("/{postId}")
     public Optional<Post> findById(@PathVariable int postId) {
         return postService.findById(postId);
+    }
+
+    @GetMapping("/search")
+    public List<Post> searchPosts (@RequestParam long authorId, @RequestParam LocalDate date) {
+        return postService.searchPosts(authorId, date);
     }
 }

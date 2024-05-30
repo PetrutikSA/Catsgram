@@ -8,10 +8,9 @@ import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -72,5 +71,12 @@ public class PostService {
         return posts.values().stream()
                 .filter(x -> x.getId() == postId)
                 .findFirst();
+    }
+
+    public List<Post> searchPosts (long authorId, LocalDate date) {
+        return posts.values().stream()
+                .filter(post -> post.getAuthorId() == authorId)
+                .filter(post -> LocalDate.ofInstant(post.getPostDate(), ZoneId.systemDefault()).equals(date))
+                .toList();
     }
 }
