@@ -18,8 +18,13 @@ public class PostService {
     private final Map<Long, Post> posts = new HashMap<>();
     private final UserService userService; // @Autowired применяется автоматически, тк final
 
-    public Collection<Post> findAll() {
-        return posts.values();
+    public Collection<Post> findAll(int from, int size, String sort) {
+        Comparator<Instant> sortOrder = (sort.equals("desc")) ? Comparator.reverseOrder() : Comparator.naturalOrder();
+        return posts.values().stream()
+                .sorted(Comparator.comparing(Post::getPostDate, sortOrder))
+                .skip((from-1))
+                .limit(size)
+                .toList();
     }
 
     public Post create(Post post) {
