@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class ImageService {
     }
 
     public List<Image> addPostImages(Long postId, List<MultipartFile> files) {
-        return new ArrayList<>();
+        return files.stream().map(file -> saveImage(postId, file)).toList();
     }
 
     private Path saveToFile (MultipartFile file, Post post) {
@@ -56,10 +55,6 @@ public class ImageService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public List<Image> saveImages(long postId, List<MultipartFile> files) {
-        return files.stream().map(file -> saveImage(postId, file)).toList();
     }
 
     public Image saveImage(Long postId, MultipartFile file) {

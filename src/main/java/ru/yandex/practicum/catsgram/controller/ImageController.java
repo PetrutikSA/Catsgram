@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ImageController {
-    private ImageService imageService;
+    private final ImageService imageService;
 
     @GetMapping("/posts/{postId}/images")
     public List<Image> getPostImages (@PathVariable Long postId) {
