@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
+import ru.yandex.practicum.catsgram.exception.ImageFileException;
+import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.model.Video;
+import ru.yandex.practicum.catsgram.model.VideoData;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -71,5 +74,29 @@ public class VideoService {
                 .max()
                 .orElse(0);
         return ++currentMaxId;
+    }
+
+    public VideoData downloadVideo(Long videoId) {
+        if (videos.containsKey(videoId)) {
+            Video video = videos.get(videoId);
+            return new VideoData(video.getOriginalName(), loadFile(video));
+        } else {
+            throw new NotFoundException("Видео с id = " + videos + " не найдено");
+        }
+    }
+
+    private byte[] loadFile (Video video) {
+        Path path = Path.of(video.getFilePath());
+        if (Files.exists(path)) {
+            try {
+                return Files.readAllBytes(path);
+            } catch (IOException e) {
+                throw new ImageFileException("Файл не найден. Id: " + video.getId()
+                        + ", name: " + video.getOriginalName(), e);
+            }
+        } else {
+            throw new ImageFileException("Файл не найден. Id: " + video.getId()
+                    + ", name: " + video.getOriginalName());
+        }
     }
 }
