@@ -21,7 +21,7 @@ public class ImageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/posts/{postId}/images")
-    public List<Image> addPostImages (@PathVariable Long postId, @RequestBody List<MultipartFile> images) {
+    public List<Image> addPostImages (@PathVariable Long postId,  @RequestParam("image") List<MultipartFile> images) {
         return imageService.addPostImages(postId,images);
     }
 }
