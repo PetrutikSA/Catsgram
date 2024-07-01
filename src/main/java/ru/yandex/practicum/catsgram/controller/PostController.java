@@ -28,7 +28,7 @@ public class PostController {
         if (size <= 0) {
             throw new ParameterNotValidException("size", "Некорректный размер выборки. Размер должен быть больше нуля");
         }
-        if (!sort.equals("asc") &&  !sort.equals("desc")) {
+        if (!sort.equals("asc") && !sort.equals("desc")) {
             throw new ParameterNotValidException("sort", "Некорректный параметр сортировки. Должен быть либо asc, либо desc");
         }
         return postService.findAll(from, size, sort);
@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public List<Post> searchPosts (@RequestParam long authorId, @RequestParam LocalDate date) {
+    public List<Post> searchPosts(@RequestParam long authorId, @RequestParam LocalDate date) {
         return postService.searchPosts(authorId, date);
     }
 }

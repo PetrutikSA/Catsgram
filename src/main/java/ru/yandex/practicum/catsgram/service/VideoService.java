@@ -85,7 +85,7 @@ public class VideoService {
         }
     }
 
-    private byte[] loadFile (Video video) {
+    private byte[] loadFile(Video video) {
         Path path = Path.of(video.getFilePath());
         if (Files.exists(path)) {
             try {

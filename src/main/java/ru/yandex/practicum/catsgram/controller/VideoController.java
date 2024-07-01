@@ -22,7 +22,7 @@ public class VideoController {
     }
 
     @GetMapping(value = "/videos/{videoId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<byte[]> downloadVideo (@PathVariable Long videoId) {
+    public ResponseEntity<byte[]> downloadVideo(@PathVariable Long videoId) {
         VideoData videoData = videoService.downloadVideo(videoId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(ContentDisposition.attachment()

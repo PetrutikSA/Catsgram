@@ -29,7 +29,7 @@ public class ImageService {
     private String imageDirectory;
     private final PostService postService;
 
-    public List<Image> getPostImages (Long postId) {
+    public List<Image> getPostImages(Long postId) {
         return images.values().stream()
                 .filter(image -> image.getPostId() == postId)
                 .toList();
@@ -39,7 +39,7 @@ public class ImageService {
         return files.stream().map(file -> saveImage(postId, file)).toList();
     }
 
-    private Path saveToFile (MultipartFile file, Post post) {
+    private Path saveToFile(MultipartFile file, Post post) {
         try {
             // формирование уникального названия файла на основе текущего времени и расширения оригинального файла
             String uniqueFileName = String.format("%d.%s", Instant.now().toEpochMilli(),
@@ -82,7 +82,7 @@ public class ImageService {
         return ++currentMaxId;
     }
 
-    public ImageData getImagedata (Long imageId) {
+    public ImageData getImagedata(Long imageId) {
         if (images.containsKey(imageId)) {
             Image image = images.get(imageId);
             return new ImageData(loadFile(image), image.getOriginalFileName());
@@ -90,6 +90,7 @@ public class ImageService {
             throw new NotFoundException("Изображение с id = " + imageId + " не найдено");
         }
     }
+
     private byte[] loadFile(Image image) {
         Path path = Path.of(image.getFilePath());
         if (Files.exists(path)) {

@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User addNewUser (@RequestBody User user) {
+    public User addNewUser(@RequestBody User user) {
         return userService.addNewUser(user);
     }
 
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<User> findById (@PathVariable Long id) {
+    public Optional<User> findById(@PathVariable Long id) {
         return userService.getUserWithId(id);
     }
 }

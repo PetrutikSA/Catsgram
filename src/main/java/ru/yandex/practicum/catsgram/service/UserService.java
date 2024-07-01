@@ -17,7 +17,7 @@ public class UserService {
         return users.values();
     }
 
-    public User addNewUser (User user) {
+    public User addNewUser(User user) {
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());
         validateUsername(user.getUsername());
@@ -48,7 +48,7 @@ public class UserService {
         return user;
     }
 
-    private long getNextId () {
+    private long getNextId() {
         long currentMaxId = users.keySet()
                 .stream()
                 .mapToLong(id -> id)
@@ -57,18 +57,18 @@ public class UserService {
         return ++currentMaxId;
     }
 
-    private void validateEmail (String email) {
+    private void validateEmail(String email) {
         final Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         if (email == null || email.isBlank()) {
             throw new ConditionsNotMetException("E-mail не может быть пустым");
         } else if (isEmailAlreadyRegistered(email)) {
             throw new DuplicatedDataException("Этот e-mail уже используется");
-        } else if(!emailPattern.matcher(email).matches()) {
+        } else if (!emailPattern.matcher(email).matches()) {
             throw new ConditionsNotMetException("E-mail введен некорректный");
         }
     }
 
-    private void validatePassword (String password) {
+    private void validatePassword(String password) {
         if (password == null || password.isBlank()) {
             throw new ConditionsNotMetException("Password не может быть пустым");
         } else if (password.length() < 6) {
@@ -76,7 +76,7 @@ public class UserService {
         }
     }
 
-    private void validateUsername (String username) {
+    private void validateUsername(String username) {
         if (username == null || username.isBlank()) {
             throw new ConditionsNotMetException("Username не может быть пустым");
         }
@@ -91,7 +91,7 @@ public class UserService {
         return emailInDB.isPresent();
     }
 
-    public Optional<User> getUserWithId (Long id) {
+    public Optional<User> getUserWithId(Long id) {
         return !users.containsKey(id) ? Optional.empty() : Optional.of(users.get(id));
     }
 }

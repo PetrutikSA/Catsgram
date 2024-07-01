@@ -13,31 +13,31 @@ import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFoundException (NotFoundException e) {
+    public ErrorResponse handleNotFoundException(NotFoundException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handleDuplicatedDataException (DuplicatedDataException e) {
+    public ErrorResponse handleDuplicatedDataException(DuplicatedDataException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handleConditionsNotMetException (ConditionsNotMetException e) {
+    public ErrorResponse handleConditionsNotMetException(ConditionsNotMetException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleParameterNotValidException (ParameterNotValidException e) {
+    public ErrorResponse handleParameterNotValidException(ParameterNotValidException e) {
         return new ErrorResponse(String.format("Некорректное значение параметра %s: %s", e.getParameter(), e.getReason()));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleOtherExceptions (Throwable e) {
+    public ErrorResponse handleOtherExceptions(Throwable e) {
         return new ErrorResponse("Произошла непредвиденная ошибка.");
     }
 }

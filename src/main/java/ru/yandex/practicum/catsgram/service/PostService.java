@@ -22,7 +22,7 @@ public class PostService {
         Comparator<Instant> sortOrder = (sort.equals("desc")) ? Comparator.reverseOrder() : Comparator.naturalOrder();
         return posts.values().stream()
                 .sorted(Comparator.comparing(Post::getPostDate, sortOrder))
-                .skip((from-1))
+                .skip((from - 1))
                 .limit(size)
                 .toList();
     }
@@ -78,7 +78,7 @@ public class PostService {
                 .findFirst();
     }
 
-    public List<Post> searchPosts (long authorId, LocalDate date) {
+    public List<Post> searchPosts(long authorId, LocalDate date) {
         return posts.values().stream()
                 .filter(post -> post.getAuthorId() == authorId)
                 .filter(post -> LocalDate.ofInstant(post.getPostDate(), ZoneId.systemDefault()).equals(date))
