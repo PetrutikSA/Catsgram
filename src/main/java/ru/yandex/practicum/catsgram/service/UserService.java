@@ -6,6 +6,7 @@ import ru.yandex.practicum.catsgram.dal.UserRepository;
 import ru.yandex.practicum.catsgram.dto.UserDTO;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
+import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.mapper.UserMapper;
 import ru.yandex.practicum.catsgram.model.User;
 
@@ -24,44 +25,21 @@ public class UserService {
                 .toList();
     }
 
-    /*public User addNewUser(User user) {
+    public UserDTO addNewUser(User user) {
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());
         validateUsername(user.getUsername());
-        user.setId(getNextId());
         user.setRegistrationDate(Instant.now());
-        users.put(user.getId(), user);
-        return user;
+        user = userRepository.save(user);
+        return UserMapper.mapToUserDto(user);
     }
 
-    public User updateUser(User user) {
-        Long id = user.getId();
-        if (id == null || id == 0) {
-            throw new ConditionsNotMetException("Id должен быть указан");
-        }
-        User oldUser = users.get(id);
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String email = user.getEmail();
-        validatePassword(password);
-        if (email != null && !email.isBlank()) {
-            if (!oldUser.getEmail().equals(email)) {
-                validateEmail(email);
-                oldUser.setEmail(email);
-            }
-        }
-        oldUser.setUsername(username);
-        oldUser.setPassword(password);
-        return user;
-    }
-
-    private long getNextId() {
-        long currentMaxId = users.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
-        return ++currentMaxId;
+    public UserDTO updateUser(long userId, User request) {
+        User updatedUser = userRepository.findById(userId)
+                .map(user -> UserMapper.updateUserFields(user, request))
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        updatedUser = userRepository.update(updatedUser);
+        return UserMapper.mapToUserDto(updatedUser);
     }
 
     private void validateEmail(String email) {
@@ -90,15 +68,14 @@ public class UserService {
     }
 
     private boolean isEmailAlreadyRegistered(String email) {
-        Optional<String> emailInDB = users.values()
-                .stream()
-                .map(User::getEmail)
-                .filter(email::equals)
-                .findAny();
-        return emailInDB.isPresent();
+        Optional<User> alreadyExistUser = userRepository.findByEmail(email);
+        return alreadyExistUser.isPresent();
     }
-*/
-    public Optional<User> getUserWithId(Long id) {
-        return null; //!users.containsKey(id) ? Optional.empty() : Optional.of(users.get(id));
+
+    public UserDTO getUserWithId(Long id) {
+        return userRepository.findById(id)
+                .map(UserMapper::mapToUserDto)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден с ID: " + id));
+
     }
 }

@@ -2,6 +2,7 @@ package ru.yandex.practicum.catsgram.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.catsgram.dto.UserDTO;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
@@ -33,10 +34,9 @@ public class PostService {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
         //проверяем что у поста передан существующий пользователь
-        Optional<User> user = userService.getUserWithId(post.getAuthorId());
-        if (user.isEmpty()) {
-            throw new ConditionsNotMetException("Должен быть передан корректный id пользователя");
-        }
+        //TODO
+        UserDTO user = userService.getUserWithId(post.getAuthorId());
+
         // формируем дополнительные данные
         post.setId(getNextId());
         post.setPostDate(Instant.now());

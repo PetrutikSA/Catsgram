@@ -15,4 +15,17 @@ public class UserMapper {
         userDTO.setRegistrationDate(user.getRegistrationDate());
         return userDTO;
     }
+
+    public static User updateUserFields(User user, User request) {
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if (request.getPassword() != null) {
+            user.setPassword(request.getPassword());
+        }
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername());
+        }
+        return user;
+    }
 }
