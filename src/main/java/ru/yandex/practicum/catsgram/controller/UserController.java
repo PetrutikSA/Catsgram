@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.dto.UserDTO;
+import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.Collection;
@@ -20,20 +21,20 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    /*@PostMapping
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User addNewUser(@RequestBody User user) {
+    public UserDTO addNewUser(@RequestBody User user) {
         return userService.addNewUser(user);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public UserDTO updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @GetMapping("/{id}")
-    public Optional<User> findById(@PathVariable Long id) {
+    public UserDTO findById(@PathVariable Long id) {
         return userService.getUserWithId(id);
-    }*/
+    }
 }
