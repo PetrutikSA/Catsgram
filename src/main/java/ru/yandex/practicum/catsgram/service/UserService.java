@@ -1,8 +1,12 @@
 package ru.yandex.practicum.catsgram.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.catsgram.dal.UserRepository;
+import ru.yandex.practicum.catsgram.dto.UserDTO;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
+import ru.yandex.practicum.catsgram.mapper.UserMapper;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.time.Instant;
@@ -10,14 +14,17 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private final Map<Long, User> users = new HashMap<>();
+    private final UserRepository userRepository;
 
-    public Collection<User> getAllUsers() {
-        return users.values();
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserMapper::mapToUserDto)
+                .toList();
     }
 
-    public User addNewUser(User user) {
+    /*public User addNewUser(User user) {
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());
         validateUsername(user.getUsername());
@@ -90,8 +97,8 @@ public class UserService {
                 .findAny();
         return emailInDB.isPresent();
     }
-
+*/
     public Optional<User> getUserWithId(Long id) {
-        return !users.containsKey(id) ? Optional.empty() : Optional.of(users.get(id));
+        return null; //!users.containsKey(id) ? Optional.empty() : Optional.of(users.get(id));
     }
 }

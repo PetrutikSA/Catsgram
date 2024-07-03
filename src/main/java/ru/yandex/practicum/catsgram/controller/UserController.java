@@ -3,11 +3,10 @@ package ru.yandex.practicum.catsgram.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.catsgram.model.User;
+import ru.yandex.practicum.catsgram.dto.UserDTO;
 import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,11 +15,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public Collection<User> getAllUsers() {
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PostMapping
+    /*@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User addNewUser(@RequestBody User user) {
         return userService.addNewUser(user);
@@ -35,5 +35,5 @@ public class UserController {
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable Long id) {
         return userService.getUserWithId(id);
-    }
+    }*/
 }
