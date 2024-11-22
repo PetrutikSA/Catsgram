@@ -51,7 +51,7 @@
 - __POST__ _/posts/{postId}/images_ - Добавить изображение к посту
 - __GET__ _/posts/{postId}/images_ - Получить все изображения к посту
 - __GET__ _/images/{imageId}_ - скачать изображение
-- 
+
 ####  Видео - API для работы с видео к постам
 - __POST__ _/posts/{postId}/images_ - Добавить видео к посту
 - __GET__ _/images/{imageId}_ - скачать видео
