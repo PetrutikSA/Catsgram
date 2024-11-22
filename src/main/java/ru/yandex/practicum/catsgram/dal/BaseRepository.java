@@ -28,7 +28,7 @@ public class BaseRepository<T> {
         }
     }
 
-    public List<T> findMany (String query, Object... params) {
+    public List<T> findMany(String query, Object... params) {
         return jdbc.query(query, mapper, params);
     }
 
@@ -52,7 +52,8 @@ public class BaseRepository<T> {
             for (int idx = 0; idx < params.length; idx++) {
                 ps.setObject(idx + 1, params[idx]);
             }
-            return ps;}, keyHolder);
+            return ps;
+        }, keyHolder);
 
         Long id = keyHolder.getKeyAs(Long.class);
 
